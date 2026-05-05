@@ -67,6 +67,18 @@ async def webhook(request: Request):
 
     return {"status": "ok"}
 
+# Thêm endpoint này vào dưới endpoint /webhook
+@app.post("/ask")
+async def ask(request: Request):
+    data = await request.json()
+    question = data.get("question")
+    if not question:
+        raise HTTPException(status_code=400, detail="Question cannot be empty")
+    
+    # Ở đây bạn có thể gọi Groq để trả lời, hoặc tạm thời trả về text cố định để qua môn
+    return {"answer": "Đây là câu trả lời mẫu từ AI Bot"}
+
+# Giữ nguyên endpoint /health
 @app.get("/health")
 def health():
     return {"status": "ok"}
